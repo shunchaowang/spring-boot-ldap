@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot' 
+apply plugin: 'war'
+
+
+war {
+	baseName = 'spring-boot-tutorial'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    // ldap dependencies
+	compile('org.springframework.security:spring-security-ldap')
+    // Is the ApacheDS server - 1.5.6 and 1.5.7 don't work
+    compile('org.apache.directory.server:apacheds-server-jndi:1.5.5')
+
+
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile('com.google.guava:guava:19.0')
+	compile('javax.inject:javax.inject:1')
+	runtime('com.h2database:h2')
+	runtime('org.hsqldb:hsqldb')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test') 
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.9'
+}
